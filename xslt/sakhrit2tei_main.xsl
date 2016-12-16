@@ -32,7 +32,6 @@
 
     <xsl:template match="html:html">
         <!-- some variables -->
-<!--        <xsl:variable name="p_title-journal" select="'مواقف'"/>-->
         <xsl:variable name="v_year">
             <xsl:analyze-string select=".//*[@id = 'ContentPlaceHolder1_fvIssueInfo_Label1']" regex="(\d{{4}})">
                 <xsl:matching-substring>
