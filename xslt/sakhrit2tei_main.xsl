@@ -196,6 +196,7 @@
     <xsl:template match="html:table[@id = 'ContentPlaceHolder1_dlIndexs']/html:tr">
         <xsl:variable name="v_pb" select="number(normalize-space(./html:td[position() = 6]))"/>
         <xsl:variable name="v_pb-following-article" select="number(normalize-space(following-sibling::html:tr[1]/html:td[position() = 6]))"/>
+        <!-- some of the pb need  correction, which is currently done with another styleseheet -->
         <pb ed="print">
             <xsl:attribute name="n">
                 <xsl:value-of select="$v_pb"/>
