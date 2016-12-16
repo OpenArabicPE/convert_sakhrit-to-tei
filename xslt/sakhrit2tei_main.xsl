@@ -9,7 +9,16 @@
 
     <!-- periodical specific parameters -->
     <xsl:param name="p_id-oclc" select="'792755362'"/>
+    <!-- $p_id-sakhrit refers to the periodical's ID at the sakhrit website, such as:
+        - al-Muqtaṭaf: 107
+        - al-Ustādh: 106
+        - al-Hilāl : 134
+        - al-Bayān: 161
+        - al-Manār: 33
+        - al-Mashriq: 108
+    -->
     <xsl:param name="p_id-sakhrit" select="'11'"/>
+    <!-- $p_last-page depends on the periodical and should be generously selected to catch all pages -->
     <xsl:param name="p_last-page" select="300"/>
     <!-- the paramater should be changed to include the entire biblStruct for the pariodical -->
     <xsl:param name="p_title-journal">
