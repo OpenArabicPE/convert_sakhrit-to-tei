@@ -4,6 +4,8 @@
     <xsl:output method="xml" indent="yes" encoding="UTF-8" version="1.0"/>
 
     <xsl:include href="sakhrit2tei_functions-images.xsl"/>
+    
+    <!-- this stylesheet transforms the html input from sakhrit into tei xml files -->
 
     <!-- periodical specific parameters -->
     <xsl:param name="p_id-oclc" select="'792755362'"/>
@@ -49,7 +51,7 @@
         <!-- build the output -->
         <xsl:result-document href="../xml/oclc_{$p_id-oclc}-i_{$v_issue}.TEIP5.xml">
             <xsl:value-of
-                select="'&lt;?xml-model href=&quot;https://rawgit.com/tillgrallert/TeachingTei/master/schema/tei_jaraid.rng&quot; type=&quot;application/xml&quot; schematypens=&quot;http://relaxng.org/ns/structure/1.0&quot;?>'"
+                select="'&lt;?xml-model href=&quot;https://rawgit.com/OpenAraPE/OpenAraPE_ODD/master/schema/tei_periodical.rng&quot; type=&quot;application/xml&quot; schematypens=&quot;http://relaxng.org/ns/structure/1.0&quot;?>'"
                 disable-output-escaping="yes"/>
             <xsl:value-of
                 select="'&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;https://rawgit.com/tillgrallert/tei-boilerplate-arabic-editions/online/xslt-boilerplate/teibp.xsl&quot;?>'"
