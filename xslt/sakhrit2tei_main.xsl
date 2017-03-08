@@ -59,7 +59,7 @@
         <!-- build the output -->
         <xsl:result-document href="../xml/oclc_{$p_id-oclc}-i_{$v_issue}.TEIP5.xml">
             <xsl:value-of
-                select="'&lt;?xml-model href=&quot;https://rawgit.com/OpenAraPE/OpenAraPE_ODD/master/schema/tei_periodical.rng&quot; type=&quot;application/xml&quot; schematypens=&quot;http://relaxng.org/ns/structure/1.0&quot;?>'"
+                select="'&lt;?xml-model href=&quot;https://rawgit.com/OpenArabicPE/OpenArabicPE_ODD/master/schema/tei_periodical.rng&quot; type=&quot;application/xml&quot; schematypens=&quot;http://relaxng.org/ns/structure/1.0&quot;?>'"
                 disable-output-escaping="yes"/>
             <xsl:value-of
                 select="'&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;https://rawgit.com/tillgrallert/tei-boilerplate-arabic-editions/online/xslt-boilerplate/teibp.xsl&quot;?>'"
