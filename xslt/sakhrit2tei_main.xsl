@@ -8,7 +8,6 @@
     <!-- this stylesheet transforms the html input from sakhrit into tei xml files -->
 
     <!-- periodical specific parameters -->
-    <xsl:param name="p_id-oclc" select="'792755362'"/>
     <!-- $p_id-sakhrit refers to the periodical's ID at the sakhrit website, such as:
         - al-Muqtaṭaf: 107
         - al-Ustādh: 106
@@ -16,16 +15,92 @@
         - al-Bayān: 161
         - al-Manār: 33
         - al-Mashriq: 108
+        - Mawaqif: 11
     -->
-    <xsl:param name="p_id-sakhrit" select="'11'"/>
+    <xsl:param name="p_id-sakhrit" select="11"/>
+    
     <!-- $p_last-page depends on the periodical and should be generously selected to catch all pages -->
     <xsl:param name="p_last-page" select="300"/>
-    <!-- the paramater should be changed to include the entire biblStruct for the pariodical -->
-    <xsl:param name="p_title-journal">
-        <tei:title xml:lang="ar" level="j">مواقف</tei:title>
-        <tei:title xml:lang="ar-Latn-x-ijmes" level="j">Mawāqif</tei:title>
-        <tei:title xml:lang="ar-Latn-x-sakhrit" level="j">Mawakif</tei:title>
+    
+    
+    <!-- $p_periodicals holds <tei:biblStruct> for every periodical -->
+    <xsl:param name="p_periodicals">
+        <listBibl>
+            <!-- @n refers to the periodical's ID on the sakhrit website -->
+            <biblStruct xml:lang="en" n="134">
+                <monogr>
+                    <title level="j" xml:lang="ar">الهلال</title>
+                    <title level="j" type="sub" xml:lang="ar">مجلة علمية تاريخية صحية أدبية</title>
+                    <title level="j" xml:lang="ar-Latn-x-ijmes">al-Hilāl</title>
+                    <title level="j" type="sub" xml:lang="ar-Latn-x-ijmes">majalla ʿilmiyya tārīkhiyya ṣaḥḥiyya adabiyya</title>
+                    <editor ref="viaf:76496271">
+                        <persName xml:lang="ar">
+                            <forename>جرجي</forename>
+                            <surname>زيدان</surname>
+                        </persName>
+                        <persName xml:lang="ar-Latn-x-ijmes">
+                            <forename>Jirjī</forename>
+                            <surname>Zaydān</surname>
+                        </persName>
+                    </editor>
+                    <imprint>
+                        <publisher>
+                            <orgName xml:lang="ar">مطبعة الهلال</orgName>
+                            <orgName xml:lang="ar-Latn-x-ijmes">Maṭbaʿat al-Hilāl</orgName>
+                        </publisher>
+                        <pubPlace>
+                            <placeName xml:lang="ar">القاهرة</placeName>
+                            <placeName xml:lang="ar-Latn-x-ijmes">al-Qāhira</placeName>
+                            <placeName xml:lang="en">Cairo</placeName>
+                        </pubPlace>
+                        <!-- this needs processing later on -->
+                        <date xml:lang="ar"/>
+                    </imprint>
+                    <!-- this needs processing later on -->
+                    <biblScope unit="volume"/>
+                    <biblScope unit="issue"/>
+                    <biblScope unit="page" from="1" to=""/>
+                </monogr>
+                <idno type="oclc">1639361</idno>
+                <idno type="oclc">183194011</idno>
+                <idno type="issn">1110-8908</idno>
+            <idno type="sakhrit" xml:lang="en">134</idno>
+        </biblStruct>
+        <biblStruct xml:lang="en" n="11">
+            <monogr xml:lang="en">
+                <title level="j" xml:lang="ar">مواقف</title>
+                <title level="j" type="sub" xml:lang="ar">للحرية، والإبداع، والتغير</title>
+                <title level="j" xml:lang="ar-Latn-x-ijmes">Mawāqif</title>
+                <title level="j" type="sub" xml:lang="ar-Latn-x-ijmes">li-l-ḥurriyya, wa-l-ibdāʿ wa-l-taghayyur</title>
+                <tei:title xml:lang="ar-Latn-x-sakhrit" level="j">Mawakif</tei:title>
+                <editor ref="https://viaf.org/viaf/27059798">
+                    <persName xml:lang="ar">أدونيس</persName>
+                    <persName xml:lang="ar-Latn-x-ijmes">Adūnīs</persName>
+                </editor>
+                <imprint xml:lang="en">
+                    <pubPlace xml:lang="en">
+                        <placeName xml:lang="ar">بيروت</placeName>
+                        <placeName xml:lang="ar-Latn-x-ijmes">Bayrūt</placeName>
+                        <placeName xml:lang="en">Beirut</placeName>
+                    </pubPlace>
+                    <!-- this needs processing later on -->
+                    <date xml:lang="ar"/>
+                </imprint>
+                <!-- this needs processing later on -->
+                <biblScope unit="volume"/>
+                <biblScope unit="issue"/>
+                <biblScope unit="page" from="1" to=""/>
+            </monogr>
+            <idno type="oclc" xml:lang="en">792755362</idno>
+            <idno type="sakhrit" xml:lang="en">11</idno>
+        </biblStruct>
+        </listBibl>
     </xsl:param>
+    
+    <!-- variables based on the selected periodical -->
+    <xsl:variable name="v_id-oclc" select="$p_periodicals/descendant::tei:biblStruct[@n=$p_id-sakhrit]/descendant::tei:idno[@type='oclc'][1]"/>
+    <xsl:variable name="v_title-journal" select="$p_periodicals/descendant::tei:biblStruct[@n=$p_id-sakhrit]/descendant::tei:title[not(@type='sub')]"/>
+    
     
     <!-- these parameters should not be changed  -->
     <xsl:param name="p_id-facs" select="'facs_'"/>
@@ -57,19 +132,19 @@
         <!-- check, if the cid points to the correct journal -->
         <xsl:if test="descendant::html:td[@class='F_MagazineName']/html:table/html:tr[1]//html:a/@href='newmagazineYears.aspx?MID=11'">
         <!-- build the output -->
-        <xsl:result-document href="../xml/oclc_{$p_id-oclc}-i_{$v_issue}.TEIP5.xml">
+        <xsl:result-document href="../xml/oclc_{$v_id-oclc}-i_{$v_issue}.TEIP5.xml">
             <xsl:value-of
                 select="'&lt;?xml-model href=&quot;https://rawgit.com/OpenArabicPE/OpenArabicPE_ODD/master/schema/tei_periodical.rng&quot; type=&quot;application/xml&quot; schematypens=&quot;http://relaxng.org/ns/structure/1.0&quot;?>'"
                 disable-output-escaping="yes"/>
             <xsl:value-of
                 select="'&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;https://rawgit.com/tillgrallert/tei-boilerplate-arabic-editions/online/xslt-boilerplate/teibp.xsl&quot;?>'"
                 disable-output-escaping="yes"/>
-            <TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="oclc_{$p_id-oclc}-i_{$v_issue}">
+            <TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="oclc_{$v_id-oclc}-i_{$v_issue}">
                 <teiHeader>
                     <fileDesc>
                         <titleStmt>
                             <!-- add copy of title -->
-                            <xsl:copy-of select="$p_title-journal/tei:title[@xml:lang='ar-Latn-x-ijmes']"/>
+                            <xsl:copy-of select="$v_title-journal/tei:title[@xml:lang='ar-Latn-x-ijmes']"/>
                             <editor ref="https://viaf.org/viaf/27059798">
                                 <persName xml:lang="ar">أدونيس</persName>
                                 <persName xml:lang="ar-Latn-x-ijmes">Adūnīs</persName>
@@ -94,7 +169,7 @@
                             </availability>
                             <idno type="url">
                                 <xsl:value-of
-                                    select="concat('https://github.com/tillgrallert/digital-mawaqif/blob/master/xml/oclc_',$p_id-oclc,'-i_', $v_issue, '.TEIP5.xml')"
+                                    select="concat('https://github.com/tillgrallert/digital-mawaqif/blob/master/xml/oclc_',$v_id-oclc,'-i_', $v_issue, '.TEIP5.xml')"
                                 />
                             </idno>
                         </publicationStmt>
@@ -123,7 +198,7 @@
                                     <biblScope unit="issue" n="{$v_issue}"/>
                                     <biblScope unit="page" from="1" to=""/>
                                 </monogr>
-                                <idno type="oclc" xml:lang="en"><xsl:value-of select="$p_id-oclc"/></idno>
+                                <idno type="oclc" xml:lang="en"><xsl:value-of select="$v_id-oclc"/></idno>
                                 <idno type="sakhrit" xml:lang="en">
                                     <xsl:value-of select="replace(base-uri(.),'.*/cid_(\d+)\.html','http://archive.sakhrit.co/contents.aspx?CID=$1')"/>
                                 </idno>
@@ -168,7 +243,7 @@
                     <front>
                         <div>
                             <bibl>
-                                <xsl:copy-of select="$p_title-journal/tei:title[@xml:lang='ar']"/>
+                                <xsl:copy-of select="$v_title-journal/tei:title[@xml:lang='ar']"/>
                                 <biblScope unit="issue" n="{$v_issue}">
                                     <xsl:value-of select=".//*[@id = 'ContentPlaceHolder1_fvIssueInfo_lbissuenumber']"/>
                                 </biblScope>
