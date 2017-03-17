@@ -10,6 +10,7 @@
     <!-- periodical specific parameters -->
     <!-- $p_id-sakhrit refers to the periodical's ID at the sakhrit website, such as:
         - al-Muqtaṭaf: 107
+        - al-Muqtabas: 125
         - al-Ustādh: 106
         - al-Hilāl : 134
         - al-Bayān: 161
@@ -33,7 +34,7 @@
                     <title level="j" type="sub" xml:lang="ar">مجلة علمية تاريخية صحية أدبية</title>
                     <title level="j" xml:lang="ar-Latn-x-ijmes">al-Hilāl</title>
                     <title level="j" type="sub" xml:lang="ar-Latn-x-ijmes">majalla ʿilmiyya tārīkhiyya ṣaḥḥiyya adabiyya</title>
-                    <editor ref="viaf:76496271">
+                    <editor ref="https://viaf.org/viaf/76496271">
                         <persName xml:lang="ar">
                             <forename>جرجي</forename>
                             <surname>زيدان</surname>
@@ -65,6 +66,53 @@
                 <idno type="oclc">183194011</idno>
                 <idno type="issn">1110-8908</idno>
             <idno type="sakhrit" xml:lang="en">134</idno>
+        </biblStruct>
+        <biblStruct xml:lang="en" n="125">
+            <monogr xml:lang="en">
+                <title level="j" xml:lang="ar">المقتبس</title>
+                <title level="j" xml:lang="ar" type="sub">مجلة أدبية علمية اجتماعية تصدر بالقاهرة في غرة كل شهر عربي</title>
+                <title level="j" xml:lang="ar-Latn-x-ijmes">al-Muqtabas</title>
+                <title level="j" type="sub" xml:lang="ar-Latn-x-ijmes">Majalla adabiyya ʿilmiyya ijtimāʿiyya tuṣadir bi-l-Qāhira fī gharrat kull shahr ʿarabī</title>
+                <title level="j" xml:lang="fr">Al-Moktabas</title>
+                <title level="j" type="sub" xml:lang="fr">Revue mensuelle, littéraire, scientifique &amp; Sociologique</title>
+                <editor ref="https://viaf.org/viaf/32272677"> 
+                    <persName xml:lang="ar"> 
+                        <forename xml:lang="ar">محمد</forename>
+                        <surname xml:lang="ar">كرد علي</surname> 
+                    </persName> 
+                    <persName xml:lang="ar-Latn-x-ijmes"> 
+                        <forename xml:lang="ar-Latn-x-ijmes">Muḥammad</forename> 
+                        <surname xml:lang="ar-Latn-x-ijmes">Kurd ʿAlī</surname>
+                    </persName> 
+                </editor>
+                <imprint xml:lang="en">
+                    <publisher> 
+                        <orgName xml:lang="ar">مطبعة الظاهر</orgName> 
+                        <orgName xml:lang="ar-Latn-x-ijmes">Maṭbaʿa al-Ẓāhir</orgName> 
+                    </publisher>
+                    <publisher> 
+                        <orgName xml:lang="ar">المطبعة العمومية</orgName> 
+                        <orgName xml:lang="ar-Latn-x-ijmes">al-Maṭbaʿa al-ʿUmūmiyya</orgName> 
+                    </publisher>
+                    <pubPlace xml:lang="en"> 
+                        <placeName xml:lang="ar">القاهرة</placeName> 
+                        <placeName xml:lang="ar-Latn-x-ijmes">al-Qāhira</placeName> 
+                        <placeName xml:lang="fr">Caire</placeName> 
+                        <placeName xml:lang="en">Cairo</placeName> 
+                    </pubPlace>
+                    <!-- this needs processing later on -->
+                    <date xml:lang="ar"/>
+                </imprint>
+                <!-- this needs processing later on -->
+                <biblScope unit="volume"/>
+                <biblScope unit="issue"/>
+                <biblScope unit="page" from="1" to=""/>
+            </monogr>
+            <idno type="oclc" xml:lang="en">4770057679</idno>
+            <idno type="oclc" xml:lang="en">79440195</idno>
+            <idno type="aucr" xml:lang="en">07201136864</idno>
+            <idno type="shamela" xml:lang="en">26523</idno>
+            <idno type="sakhrit" xml:lang="en">125</idno>
         </biblStruct>
         <biblStruct xml:lang="en" n="11">
             <monogr xml:lang="en">
@@ -133,12 +181,8 @@
         <xsl:if test="descendant::html:td[@class='F_MagazineName']/html:table/html:tr[1]//html:a/@href='newmagazineYears.aspx?MID=11'">
         <!-- build the output -->
         <xsl:result-document href="../xml/oclc_{$v_id-oclc}-i_{$v_issue}.TEIP5.xml">
-            <xsl:value-of
-                select="'&lt;?xml-model href=&quot;https://rawgit.com/OpenArabicPE/OpenArabicPE_ODD/master/schema/tei_periodical.rng&quot; type=&quot;application/xml&quot; schematypens=&quot;http://relaxng.org/ns/structure/1.0&quot;?>'"
-                disable-output-escaping="yes"/>
-            <xsl:value-of
-                select="'&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;https://rawgit.com/tillgrallert/tei-boilerplate-arabic-editions/online/xslt-boilerplate/teibp.xsl&quot;?>'"
-                disable-output-escaping="yes"/>
+            <xsl:value-of select="'&lt;?xml-model href=&quot;https://rawgit.com/OpenArabicPE/OpenArabicPE_ODD/master/schema/tei_periodical.rng&quot; type=&quot;application/xml&quot; schematypens=&quot;http://relaxng.org/ns/structure/1.0&quot;?>'" disable-output-escaping="yes"/>
+            <xsl:value-of select="'&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;https://rawgit.com/tillgrallert/tei-boilerplate-arabic-editions/online/xslt-boilerplate/teibp.xsl&quot;?>'" disable-output-escaping="yes"/>
             <TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="oclc_{$v_id-oclc}-i_{$v_issue}">
                 <teiHeader>
                     <fileDesc>
@@ -164,13 +208,10 @@
                             <pubPlace xml:lang="en">Beirut</pubPlace>
                             <date when="2016" xml:lang="en">2016</date>
                             <availability status="restricted" xml:lang="en">
-                                <licence target="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">The XML file is distributed under
-                                    a Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license</licence>
+                                <licence target="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">The XML file is distributed under a Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license</licence>
                             </availability>
                             <idno type="url">
-                                <xsl:value-of
-                                    select="concat('https://github.com/tillgrallert/digital-mawaqif/blob/master/xml/oclc_',$v_id-oclc,'-i_', $v_issue, '.TEIP5.xml')"
-                                />
+                                <xsl:value-of select="concat('https://github.com/tillgrallert/digital-mawaqif/blob/master/xml/oclc_',$v_id-oclc,'-i_', $v_issue, '.TEIP5.xml')"/>
                             </idno>
                         </publicationStmt>
                         <sourceDesc>
