@@ -11,11 +11,19 @@
     
     <!-- this stylesheet constructs an applescript using curl to download tables of content as html from sakhrit -->
     
+    <!-- The CID is an arbitrary ID assigned by skhrit to individual journal issues. One has to look them up at the sakhrit website
+            - Mawāqif: 15719 - 15818
+            - Hilāl: 12720 - 13130 (for the end of 1920) or  14071 (for the end of 2006)
+    -->
+    <xsl:param name="p_cid-start" select="15719"/>
+    <xsl:param name="p_cid-stop" select="15818"/>
+    <!-- the journal name is a random string only used for the resulting file names -->
+    <xsl:param name="p_title-journal" select="'mawaqif'"/>
+    <!-- this is the base path to a local folder -->
+    <xsl:param name="p_path-local" select="'some/path/'"/>
+    
+    <!-- this is a stable address and should not be changed -->
     <xsl:variable name="v_url-cid" select="'http://archive.sakhrit.co/contents.aspx?CID='"/>
-    <xsl:variable name="v_cid-start" select="15719"/>
-    <xsl:variable name="v_cid-stop" select="15818"/>
-    <xsl:variable name="v_title-journal" select="'Mawakif'"/>
-    <xsl:variable name="v_url-local" select="'/some/path'"/>
     
     <xsl:template match="/">
         <xsl:variable name="v_increment">
@@ -49,8 +57,8 @@
     </xsl:template>
     
     <xsl:template name="t_increment-cid">
-        <xsl:param name="p_cid-start" select="$v_cid-start"/>
-        <xsl:param name="p_cid-stop" select="$v_cid-stop"/>
+        <xsl:param name="p_cid-start" select="$p_cid-start"/>
+        <xsl:param name="p_cid-stop" select="$p_cid-stop"/>
         <xsl:variable name="v_url" select="concat($v_url-cid,$p_cid-start)"/>
         <xsl:element name="till:metadata">
             <xsl:element name="till:url">
@@ -71,11 +79,11 @@
         <xsl:param name="p_url-base"/>
         <xsl:param name="p_url"/>
         <xsl:param name="p_url-local"/>
-        <xsl:result-document href="{$v_title-journal}-metadata.scpt"><![CDATA[(* This script tries to download and html files for the journal Mawakif *)]]> 
+        <xsl:result-document href="{$p_title-journal}-metadata.scpt"><![CDATA[(* This script tries to download and html files for the journal Mawakif *)]]> 
             <![CDATA[
 set vUrlBase to "]]><xsl:value-of select="replace($p_url-base,'\s','')" disable-output-escaping="no"/><![CDATA["]]>
             <![CDATA[
-set vUrlLocalBase to "]]><xsl:value-of select="$v_url-local"/><![CDATA["]]>
+set vUrlLocalBase to "]]><xsl:value-of select="$p_path-local"/><![CDATA["]]>
             <![CDATA[
 set vUrl to {]]><xsl:value-of select="$p_url"/><![CDATA[}]]>
             <![CDATA[
