@@ -7,7 +7,8 @@
     exclude-result-prefixes="xs"
     version="2.0">
     
-    <xsl:output method="text" encoding="UTF-16"/>
+    <xsl:output method="text" encoding="UTF-8" omit-xml-declaration="yes" name="text"/>
+    <xsl:include href="shell-script_curl.xsl"/>
     
     <!-- this stylesheet constructs an applescript using curl to download tables of content as html from sakhrit -->
     
@@ -15,12 +16,12 @@
             - Mawāqif: 15719 - 15818
             - Hilāl: 12720 - 13130 (for the end of 1920) or  14071 (for the end of 2006)
     -->
-    <xsl:param name="p_cid-start" select="15719"/>
-    <xsl:param name="p_cid-stop" select="15818"/>
+    <xsl:param name="p_cid-start" select="12720"/>
+    <xsl:param name="p_cid-stop" select="13130"/>
     <!-- the journal name is a random string only used for the resulting file names -->
-    <xsl:param name="p_title-journal" select="'mawaqif'"/>
+    <xsl:param name="p_title-journal" select="'hilal'"/>
     <!-- this is the base path to a local folder -->
-    <xsl:param name="p_path-local" select="'some/path/'"/>
+    <xsl:param name="p_path-local" select="'digital-hilal/'"/>
     
     <!-- this is a stable address and should not be changed -->
     <xsl:variable name="v_url-cid" select="'http://archive.sakhrit.co/contents.aspx?CID='"/>
@@ -29,7 +30,8 @@
         <xsl:variable name="v_increment">
             <xsl:call-template name="t_increment-cid"/>
         </xsl:variable>
-        <xsl:variable name="v_list-url">
+        <!-- applescript related variables -->
+        <!--<xsl:variable name="v_list-url">
             <xsl:for-each select="$v_increment/descendant::till:url">
                 <xsl:text>"</xsl:text>
                 <xsl:value-of select="."/>
@@ -48,12 +50,18 @@
                     <xsl:text>,</xsl:text>
                 </xsl:if>
             </xsl:for-each>
-        </xsl:variable>
-        <!-- this will send the variable off to construct the curl script -->
-        <xsl:call-template name="t_applescript">
+        </xsl:variable>-->
+        <!-- this will send the variable off to construct the applescript wrapping a curl script -->
+       <!-- <xsl:call-template name="t_applescript">
             <xsl:with-param name="p_url-local" select="$v_list-url-local"/>
             <xsl:with-param name="p_url" select="$v_list-url"/>
-        </xsl:call-template>
+        </xsl:call-template>-->
+        <xsl:result-document href="{$p_title-journal}-metadata.sh" method="text">
+            <xsl:call-template name="t_curl-script">
+                <xsl:with-param name="p_url" select="$v_increment"/>
+                <xsl:with-param name="p_local-name" select="$v_increment"/>
+            </xsl:call-template>
+        </xsl:result-document>
     </xsl:template>
     
     <xsl:template name="t_increment-cid">
@@ -65,7 +73,7 @@
             <xsl:value-of select="$v_url"/>
         </xsl:element>
         <xsl:element name="till:urlLocal">
-            <xsl:value-of select="concat('/html/cid_',$p_cid-start,'.html')"/>
+            <xsl:value-of select="concat('html/cid_',$p_cid-start,'.html')"/>
         </xsl:element></xsl:element>
         <xsl:if test="$p_cid-start &lt; $p_cid-stop">
             <xsl:call-template name="t_increment-cid">
