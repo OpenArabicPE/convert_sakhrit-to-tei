@@ -15,13 +15,14 @@
     <!-- The CID is an arbitrary ID assigned by skhrit to individual journal issues. One has to look them up at the sakhrit website
             - Mawāqif: 15719 - 15818
             - Hilāl: 12720 - 13130 (for the end of 1920) or  14071 (for the end of 2006)
+            - al-Muqtabas: 5649 - 5753 (this includes some issues from other journals)
     -->
-    <xsl:param name="p_cid-start" select="12720"/>
-    <xsl:param name="p_cid-stop" select="13130"/>
+    <xsl:param name="p_cid-start" select="5649"/>
+    <xsl:param name="p_cid-stop" select="5753"/>
     <!-- the journal name is a random string only used for the resulting file names -->
-    <xsl:param name="p_title-journal" select="'hilal'"/>
+    <xsl:param name="p_title-journal" select="'muqtabas'"/>
     <!-- this is the base path to a local folder -->
-    <xsl:param name="p_path-local" select="'digital-hilal/'"/>
+    <xsl:param name="p_path-local" select="'digital-muqtabas/'"/>
     
     <!-- this is a stable address and should not be changed -->
     <xsl:variable name="v_url-cid" select="'http://archive.sakhrit.co/contents.aspx?CID='"/>
