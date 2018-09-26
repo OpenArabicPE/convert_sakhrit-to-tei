@@ -3,6 +3,9 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output encoding="UTF-8" indent="yes" method="xml"/>
+    <!-- this stylesheet should be run on a potentially huge collection of files (some 15000 files) that need pre-processing  -->
+   	<!-- TO DO:
+   		- save output to file  -->
     <!-- get the author name and ID -->
     <xsl:variable name="v_author-name"
         select="descendant::node()[@id = 'ContentPlaceHolder1_lbAuthorName']"/>
@@ -13,6 +16,7 @@
     </xsl:template>
     <xsl:template match="html:table" mode="m_table-to-bibl">
         <xsl:element name="tei:listBibl">
+        	<xsl:attribute name="corresp" select="tokenize(base-uri(),'/')[last()]"/>
             <xsl:apply-templates mode="m_table-to-bibl" select="html:tr[not(child::html:th)]"/>
         </xsl:element>
     </xsl:template>
