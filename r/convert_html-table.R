@@ -6,15 +6,6 @@ library(rvest) # for parsing HTML/XML tables
 # enable unicode
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
 
-# set a working directory
-setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/convert_sakhrit-to-tei/data/test") #/Volumes/Dessau HD/
-
-# read a html file
-v.Url <- "authorsArticles.aspx?AID=2"
-v.Source <- read_html(v.Url, encoding = "utf-8") #make sure to specify utf-8 encoding
-# read all file names in a folder
-v.Filenames <- list.files(pattern="authorsArticles*", full.names=TRUE)
-
 # function to retrieve the relevant HTML table
 func.Html.Retrieve.Table <- function(v.Url) {
   v.Source <- read_html(v.Url, encoding = "utf-8") #make sure to specify utf-8 encoding
@@ -39,6 +30,12 @@ func.Html.Retrieve.Table <- function(v.Url) {
   write.table(v.Df, file = paste("../_output/csv/",v.Url,".csv", sep = "") , row.names = F, quote = T , sep = ",")
   write_xml(v.Table, file = paste("../_output/html/",v.Url,".html", sep = ""), options = "as_html")
 }
+
+# set a working directory
+setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/convert_sakhrit-to-tei/data/test") #/Volumes/Dessau HD/
+
+# read all file names in a folder
+v.Filenames <- list.files(pattern="authorsArticles*", full.names=TRUE)
 
 # apply a function to all files
 sapply(v.Filenames, FUN = func.Html.Retrieve.Table)
