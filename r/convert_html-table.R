@@ -7,14 +7,31 @@ library(rvest) # for parsing HTML/XML tables
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
 
 # set a working directory
-setwd("/Volumes/Dessau HD/BachUni/BachBibliothek/GitHub/OpenArabicPE/convert_sakhrit-to-tei/data/test")
+setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/convert_sakhrit-to-tei/data/test") #/Volumes/Dessau HD/
 
-# rvest test
-url <- "http://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population"
-population <- url %>%
-  read_html() %>%
-  html_nodes(xpath='//*[@id="mw-content-text"]/table[1]') %>%
-  html_table()
-population <- population[[1]]
+# read a html file
+v.Source <- read_html("authorsArticles.aspx?AID=2", encoding = "utf-8") #make sure to specify utf-8 encoding
 
-file.1 <- read_html("authorsArticles.aspx?AID=2")
+# get the author name
+v.Author.Name <- v.Source %>%
+  html_node(xpath="normalize-space(descendant::node()[@id = 'ContentPlaceHolder1_lbAuthorName'])")
+
+# pull out the bibliographic information
+v.Table <- v.Source %>% 
+  # get a specific node set
+  html_nodes(xpath="descendant::table[@id = 'ContentPlaceHolder1_gvSearchResult']") %>%
+  # convert a html table to an R data frame
+  html_table(fill = T) %>%
+  data.frame() %>%
+  # select columns of interest
+  dplyr::select(1,2,3) %>%
+  # rename columns
+  dplyr::rename(
+    article.title = 1,
+    journal.title = 2,
+    journal.issue = 3) %>%
+  # add author name
+  dplyr::mutate(author.name = as.character(html_node(v.Source, xpath="normalize-space(descendant::node()[@id = 'ContentPlaceHolder1_lbAuthorName'])")))
+
+head(v.Table)
+
