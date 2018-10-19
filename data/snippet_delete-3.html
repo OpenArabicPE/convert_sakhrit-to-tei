@@ -1,0 +1,10 @@
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("HeaderView_ScriptManager1_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.TextBoxWatermarkBehavior, {"ClientStateFieldID":"ContentPlaceHolder1_text_watermark_ClientState","WatermarkCssClass":"inputSearchauthorarticle","WatermarkText":"أدخل كلمة أو أكثر من العنوان  ...","id":"ContentPlaceHolder1_text_watermark"}, null, null, $get("ContentPlaceHolder1_txtSearchAuthor"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"panelSendMail","PopupControlID":"AdditionalFeature_plSendEmail","dynamicServicePath":"/authorsArticles.aspx","id":"AdditionalFeature_mpeSendMail"}, null, null, $get("AdditionalFeature_lbtnSend"));
+});
+//]]>
+</script>

@@ -1,0 +1,57 @@
+<div id="fb-root"></div>
+<script>    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+    } (document, 'script', 'facebook-jssdk'));
+</script>
+
+<img id="imgSessionCheck" width="1" height="1" />
+
+<script type="text/javascript" >
+    //Variable used to prevent caching on some browsers and knowing the count how many times user sends request to server.
+    var counter;
+    counter = 0;
+
+    function KeepSession() {
+        // Increase counter value
+        counter++;
+
+        // Gets reference of image
+        var img = document.getElementById("imgSessionCheck");
+
+        // Set new src value, which will send a request to the server
+        img.src = "KeepSessionAlive.aspx?count=" + counter;
+
+        // now schedule this process to happen in some time interval, in this example its 1 min
+        setTimeout(KeepSession, 60000);
+    }
+
+    // Call this function for a first time
+    KeepSession();
+    </script>
+   
+    <script  type="text/javascript">
+        $(document).ready(function () {
+            $("#btnOut").click(function () {               
+                $("#SubmitDiv").toggle();
+            });
+        });
+</script>
+<script type="text/javascript">
+    var strcountry
+    var strhost
+    function GetUserInfo(data) {
+        strcountry = data.country;
+        strhost = data.ip;
+    }
+    $(function () {
+        BindUserInfo();
+    })
+    function BindUserInfo() {
+        $.post("magazineMasterPage.master", { Country: strcountry, UserIP: strhost });
+    }
+</script>
+<script type="text/javascript" src="http://ipinfo.io/json?callback=GetUserInfo"></script>

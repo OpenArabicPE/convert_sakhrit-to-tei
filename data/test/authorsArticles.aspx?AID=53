@@ -1,0 +1,719 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" oncontextmenu="return true">
+<head id="Head1"><title>
+	محمد جمال باروت
+</title><meta name="keywords" content=",أرشيف المجلات الأدبية والثقافية العربيةأرشيف المجلات العربية و الثقافية, ارشيف المجلات, مجلات ثقافية" /><meta property="og:url" content="http://archive.sakhrit.co" /><meta property="og:type" content="website" /><meta property="og:title" content="أرشيف المجلات الأدبية والثقافية العربية" /><meta property="og:description" content="يهدف الموقع لحفظ التراث المدون في المجلات الأدبية والثقافية العربية وتقديمه للباحثين. " /><meta property="og:image" content="http://archive.sakhrit.co/css/Header2015_3.png" /><link rel="Shortcut Icon" href="css/sakhr_2013.png" />
+<meta charset="utf-8"/>
+    <!--
+  master stylesheet
+
+  jQuery library
+-->
+    
+
+</head>
+<body onload="selectStyleSheet('ctl00_siteStyle'); MM_preloadImages('css/Writers_Inv_2013.png'); MM_preloadImages('css/fahares_Inv.png')" oncontextmenu="return true">
+
+<div id="fb-root"></div>
+
+    <table border="0" align="center" cellpadding="0" cellspacing="0" width="98%">
+    
+        <tr>
+            <td style="width: 100%;">
+                        
+                    <div>
+                        <div id="container"  align='center' >
+                            
+                            <div id="header">                        
+                               
+                                <div id="mainHeader">
+                                 
+                                <img src="css/Header2015_3.png"/>
+                                                                                            
+                                </div>
+                                                   
+                             </div>
+                            <div id="divStatstics" class="divStatstics">
+                                <span id="HeaderView_Label1" class="lableStatstics">199 مجلة&nbsp;&nbsp;13,270 عدد&nbsp;&nbsp;261,441 مقالة&nbsp;&nbsp;19,357 كاتب&nbsp;&nbsp;1,651,118 صفحة</span>                                   
+                            </div>
+                        </div>
+                        <br />
+                 
+                    </div>
+                 
+                                  
+                
+                
+              
+              
+                 
+                  <div id="mainMenu">
+                      <ul id="MainMenu_menu" class="menu">
+                          <li id="MainMenu_DefaultArchive">&nbsp;&nbsp;<a href="DefaultArchive.aspx">الصفحة الرئيسية </a>&nbsp;</li><li>&nbsp;| &nbsp; </li>
+                           
+                           <li id="MainMenu_AllMagazines"><a href="AllMagazines.aspx">&nbsp;المجـلات&nbsp;</a> </li><li>&nbsp;|&nbsp;</li>
+                          <li id="MainMenu_authors" style="background-color:azure;"><a href="authors.aspx">&nbsp;الكـتَّـاب&nbsp;</a>&nbsp;</li><li>&nbsp;|&nbsp;</li>
+                        
+                          <li id="MainMenu_AdvancedSearch"><a href="AdvancedSearch.aspx">&nbsp;الفهارس&nbsp;</a> </li>           
+                       
+                        
+                       
+                   
+                
+                    
+                    
+                      </ul>
+                      <div id="MainMenu_Panel1">
+	
+                          <div  class="MainSearchdiv">
+                              
+                              <span style="border:1px solid red; width:245px;background-color:#d8eaff;height:35px;">
+                              <input name="ctl00$MainMenu$txtSearch" type="text" id="MainMenu_txtSearch" Class="inputSearcharea" autocomplete="Off" onKeyDown="KeyDownHandler()" placeholder="البحث  ..." onKeyPress="doClick(&#39;MainMenu_btnSearchAll&#39;,event)" />
+                              
+                              <select name="ctl00$MainMenu$lbSearchOption" id="MainMenu_lbSearchOption" class="SearchOptionList">
+		<option value="3">أسماء الـكـتـاب</option>
+		<option value="1">عناوين المقالات</option>
+		<option value="2">أسماء المجلات</option>
+
+	</select>
+                              <a id="MainMenu_btnSearchAll" title="ابحث" class="SearchSpecialbt" href="javascript:__doPostBack(&#39;ctl00$MainMenu$btnSearchAll&#39;,&#39;&#39;)">
+                         <i class="sh-fa-search"></i>
+                                </a>
+                              </span>
+                          </div>
+                      
+</div>
+                  </div>
+                             
+             </td>
+         </tr>
+        <tr><td>                            
+                
+                <div id="printingArea">
+                    
+                    
+                </div>
+                
+                </td>
+         </tr>          
+              
+        <tr>
+            <td>
+                <div id="wrap">
+                
+<div>
+<table width="100%">
+<tr>
+<td style="vertical-align:top;padding-top:28px;text-align: center;width:20%;">
+        <table>
+            <tr><td style="width:140px;">
+                <img id="ContentPlaceHolder1_imgCover" src="AuthorImage/53.jpg" height="170" width="150" />             
+            </td></tr>
+            <tr><td>
+                <span id="ContentPlaceHolder1_lbAuthorName" class="text13">محمد جمال باروت</span>
+            </td></tr>
+            <tr><td>
+                         
+            </td></tr>
+        </table>     
+</td>
+<td style="vertical-align:top;text-align: center;">
+            <div>
+	
+            <div class="search" style="width:500px" id="AuthorArticleid">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">           
+            <tr style="background-color: #f1f1b6;">
+               <td>
+               <label for="ContentPlaceHolder1_txtSearchAuthor" id="ContentPlaceHolder1_lbSearchAuthor" class="text15">بحث في عناوين مقالات الكاتب</label>
+               </td>
+             </tr>
+               <tr>
+               <td>     
+               <input name="ctl00$ContentPlaceHolder1$txtSearchAuthor" type="text" id="ContentPlaceHolder1_txtSearchAuthor" Class="inputSearchauthorarticle" autocomplete="Off" onKeyDown="KeyDownHandler()" />            
+               <input type="hidden" name="ctl00$ContentPlaceHolder1$text_watermark_ClientState" id="ContentPlaceHolder1_text_watermark_ClientState" />                          
+                 <input type="submit" name="ctl00$ContentPlaceHolder1$btnSearchAll" value="بـحـث" id="ContentPlaceHolder1_btnSearchAll" class="loginimg" />
+               
+             </td>
+             </tr>
+             
+           
+            </table>     
+            </div>
+            
+</div>
+            <br />
+            <span id="ContentPlaceHolder1_lbAuthorTitle" class="text13">مقالات الكاتب (36)</span>
+            <div style="text-align:left;width: 80%;">
+              
+            </div>
+            <div>
+	<table class="GridViewStyle" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_gvSearchResult">
+		<tr class="HeaderStyle">
+			<th scope="col">اسم المقال</th><th scope="col">اسم المجلة</th><th scope="col">تاريخ العدد</th>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=435929" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_0">وليد الرجيب من البطل الإشكالي إلى البطل الملحمي</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_0">البيان_الكويتية</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_0">يناير - 1994</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=435940" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_1">بنية القصة القصيرة الكويتية</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_1">البيان_الكويتية</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_1">أبريل - 1994</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=435941" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_2">التجربة القصصية لسليمان الخليفي</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_2">البيان_الكويتية</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_2">أبريل - 1994</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=435942" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_3">الدينامية الشخصية متعددة الأبعاد</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_3">البيان_الكويتية</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_3">أبريل - 1994</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=435975" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_4">القصة الكويتية: العودة إلى مسقط الرأس- مقابة أولية</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_4">البيان_الكويتية</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_4">يوليو - 1994</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=436235" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_5">بنية الشخصية الروائية ودلالاتها في رواية صاحب البيت</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_5">البيان_الكويتية</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_5">نوفمبر - 1995</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=436457" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_6">فضاءات الرمز الديناميكي في شعر تميزيان، الشعر نداء حوار وتواصل بين الأمم</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_6">البيان_الكويتية</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_6">نوفمبر - 1996</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=372472" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_7">التنوير- العلمانية- الديمقراطية بين المفهوم الإجرائي والمفهوم المعتقدي</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_7">الجديد</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_7">أبريل - 1995</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=371307" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_8">لو أنك...</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_8">الطليعة الأدبية</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_8">نوفمبر - 1979</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=371326" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_9">القصيدة الشفوية في سوريا</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_9">الطليعة الأدبية</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_9">يناير - 1980</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=88639" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_10">في منطق ما بعد الحداثة</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_10">الكرمل</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_10">يوليو - 1997</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=88723" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_11">عبد السلام العجيلي: ليس هناك حد بيني وبين الفلسطيني</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_11">الكرمل</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_11">أبريل - 1998</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=88727" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_12">سقوط صفد: فاتحة سقوط الجليل</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_12">الكرمل</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_12">أكتوبر - 1998</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=88900" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_13">مكتبة الكرمل</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_13">الكرمل</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_13">أكتوبر - 2000</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=89028" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_14">التاريخ والسرد</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_14">الكرمل</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_14">يناير - 2003</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=305621" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_15">مدخل في المشروع التجريبي العربي</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_15">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_15">ديسمبر - 1980</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=305679" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_16">دراسة في رواية وليد إخلاصي (الحنظل الأليف)</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_16">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_16">أبريل - 1981</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=305781" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_17">القانون الداخلي لتيارات واتجاهات الحداثة الشعرية</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_17">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_17">سبتمبر - 1981</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=305803" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_18">الحداثة المستمرة في الهوية المتحركة للنص الشعري الحديث</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_18">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_18">نوفمبر - 1981</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=305847" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_19">نقد بعض المفاهيم الرجعية في الفكر الثوري المعاصر</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_19">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_19">فبراير - 1982</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=305942" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_20">علم الجمال اللغوي: الإبداع الفني والاستيعاب الجمالي</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_20">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_20">سبتمبر - 1982</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=306095" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_21">في النظرية الشعرية العربية الحديثة</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_21">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_21">نوفمبر - 1983</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=306214" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_22">ملف المعرفة - المقدمات الأيديولوجية لمشروع الحداثة الشعرية</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_22">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_22">سبتمبر - 1984</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=306250" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_23">ملف المعرفة - حركة مجلة شعر: 1957 - 1964 القسم الثاني</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_23">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_23">يناير - 1985</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=304667" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_24">ملف المعرفة - الحداثة الأولى مشكلة قصيدة النثر من جبران إلى حركة مجلة شعر- الجزء الأول</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_24">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_24">سبتمبر - 1985</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=306345" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_25">ملف  المعرفة - الحداثة الأولى - من جبران إلى مجلة (شعر) (القسم الثاني)</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_25">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_25">نوفمبر - 1985</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=306464" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_26">الدراسات والبحوث - الحساسية في شعر السبعينات في سورية</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_26">المعرفة</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_26">نوفمبر - 1986</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=351883" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_27">أوهام الحرية</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_27">الناقد</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_27">أبريل - 1989</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="RowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=352075" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_28">أسئلة عن معنى الأنوار في الوعي الاجتماعي العربي</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_28">الناقد</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_28">أكتوبر - 1989</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="AltRowStyle">
+			<td>
+                                <a href="ArticlePages.aspx?ArticleID=352614" style="text-decoration:none;">
+                                <span id="ContentPlaceHolder1_gvSearchResult_articleTitle_29">الأليف الغامض</span>                                
+                                </a>                                                             
+                            </td><td>
+                                
+                                    <span id="ContentPlaceHolder1_gvSearchResult_viewissue_29">الناقد</span>                                
+                                
+                              
+                            </td><td>
+                               
+                                <span id="ContentPlaceHolder1_gvSearchResult_viewissue_29">ديسمبر - 1990</span>                                
+                                                                                        
+                            </td>
+		</tr><tr class="PagerStyle">
+			<td colspan="3"><table>
+				<tr>
+					<td><span>1</span></td><td><a href="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvSearchResult&#39;,&#39;Page$2&#39;)">2</a></td>
+				</tr>
+			</table></td>
+		</tr>
+	</table>
+</div>
+
+             
+</td>
+</tr>
+</table>
+
+          
+</div>
+
+                </div>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <td>
+             <div style="text-align:left;border-bottom:3px solid #639AF7;padding-bottom:25px;">
+             
+             
+                    <ul style="list-style:none;display:inline;float:left;position:relative">
+                    <li  style="display:inline;position:relative;">
+                            <a id="AdditionalFeature_lbtnSend" class="lablesnotes" href="javascript:__doPostBack(&#39;ctl00$AdditionalFeature$lbtnSend&#39;,&#39;&#39;)"><font color="Red">مشاركة |</font></a>
+                        </li>
+                        <li  style="display:inline;position:relative;">
+                            <a onclick="javascript:window.print();" id="AdditionalFeature_lbprinted" class="lablesnotes" href="javascript:__doPostBack(&#39;ctl00$AdditionalFeature$lbprinted&#39;,&#39;&#39;)"><font color="Red">طباعة |</font></a>                              
+                        </li>
+                        <li  style="display:inline;position:relative;">                               
+                            <a id="AdditionalFeature_lbcomments" class="lablesnotes" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$AdditionalFeature$lbcomments&quot;, &quot;&quot;, false, &quot;&quot;, &quot;Notes.aspx&quot;, false, true))"><font color="Red">ملاحظات</font></a>                         
+                        </li>
+                    </ul>
+                     <div id="AdditionalFeature_plSendEmail" class="panelSend" style="display: none;">
+	
+                    <div id="Box">
+                        <table width="305" border="0" align="left">
+                            <tr>
+                                <td colspan="2">
+                                    <h1>                                      
+                                        <span style="color: #610B0B">ارسل رسالة إلى صديق</span></h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text" valign="top">
+                                    إلى:
+                                </td>
+                                <td valign="top">
+                                <span id="AdditionalFeature_lbexample"><i><font color="Red" size="3">مثال: mail@ajeeb.com</font></i></span>
+                                    <input name="ctl00$AdditionalFeature$txtTo" type="text" id="AdditionalFeature_txtTo" class="input" />
+                                    &nbsp;
+                                    &nbsp;                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" class="text">
+                                    من:
+                                </td>
+                                <td>
+                                    <input name="ctl00$AdditionalFeature$txtName" type="text" id="AdditionalFeature_txtName" class="input" />
+                                         <br />
+                                </td>
+                            </tr>
+                            <tr><td><br /></td></tr>
+                            <tr>
+                                <td valign="top" class="text">
+                                    الرسالة:
+                                </td>
+                                <td>
+                                    <textarea name="ctl00$AdditionalFeature$txtDetails" rows="8" cols="28" id="AdditionalFeature_txtDetails" class="input">
+</textarea><br />
+                                    <br />
+                                </td>
+                            </tr>                         
+                        </table>
+                        <table width="305" border="0" align="center">
+                            <tr>
+                                <td align="left" valign="top" >                               
+                                         <input type="submit" name="ctl00$AdditionalFeature$btnSend" value="إرسال" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$AdditionalFeature$btnSend&quot;, &quot;&quot;, true, &quot;sendMail&quot;, &quot;&quot;, false, false))" id="AdditionalFeature_btnSend" title="إرسال" />
+                                </td>
+                                <td class="cellspace"></td>
+                                <td align="right">                                   
+                                    <input type="submit" name="ctl00$AdditionalFeature$btnCancel" value="إلغاء" id="AdditionalFeature_btnCancel" title="إلغاء" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                
+</div>       
+                    
+                    
+                      
+                    </div>                                    
+               
+            </td>
+        </tr>
+        <tr>
+            <td>
+                
+            </td>
+        </tr>
+    </table>
+     <br />   
+          
+    
+
+   
+</body>
+</html>
