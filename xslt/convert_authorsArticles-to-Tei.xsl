@@ -15,12 +15,13 @@
         <xsl:element name="tei:persName">
             <xsl:attribute name="xml:lang" select="'ar'"/>
             <xsl:value-of
-                select="normalize-space(descendant::node()[@id = 'ContentPlaceHolder1_lbAuthorName'])"
+                select="normalize-space(descendant-or-self::node()[@id = 'ContentPlaceHolder1_lbAuthorName'])"
             />
         </xsl:element>
     </xsl:variable>
-    <xsl:variable name="v_author-id" select="substring-after(base-uri(), 'AID=')"/>
-    <xsl:variable name="v_file-name" select="tokenize(base-uri(), '/')[last()]"/>
+    <!--<xsl:variable name="v_author-id" select="substring-after(base-uri(), 'AID=')"/>-->
+    <xsl:variable name="v_author-id" select=" replace(base-uri(),'.+AID=(\d+).*$','$1')"/>
+    <xsl:variable name="v_file-name" select="substring-before(tokenize(base-uri(), '/')[last()],'.html')"/>
     <!-- generate and safe output file -->
     <xsl:template match="/">
         <xsl:result-document href="../_output/{$v_file-name}.TEIP5.xml">
@@ -33,7 +34,7 @@
                     <xsl:element name="tei:body">
                         <xsl:element name="tei:div">
                             <xsl:apply-templates mode="m_table-to-bibl"
-                                select="descendant::html:table[@id = 'ContentPlaceHolder1_gvSearchResult']"
+                                select="descendant-or-self::table[@id = 'ContentPlaceHolder1_gvSearchResult']"
                             />
                         </xsl:element>
                     </xsl:element>
@@ -42,17 +43,17 @@
         </xsl:result-document>
     </xsl:template>
     <!-- transform HTML to TEI -->
-    <xsl:template match="html:table" mode="m_table-to-bibl">
+    <xsl:template match="table" mode="m_table-to-bibl">
         <xsl:element name="tei:listBibl">
             <xsl:attribute name="corresp" select="$v_file-name"/>
             <xsl:attribute name="xml:lang" select="'ar'"/>
             <xsl:element name="tei:head">
                 <xsl:copy-of select="$v_author-name"/>
             </xsl:element>
-            <xsl:apply-templates mode="m_table-to-bibl" select="html:tr[not(child::html:th)]"/>
+            <xsl:apply-templates mode="m_table-to-bibl" select="tr[not(child::th)]"/>
         </xsl:element>
     </xsl:template>
-    <xsl:template match="html:tr" mode="m_table-to-bibl">
+    <xsl:template match="tr" mode="m_table-to-bibl">
         <xsl:element name="tei:biblStruct">
             <!-- article information -->
             <xsl:element name="tei:analytic">
@@ -64,17 +65,17 @@
                 <!-- article title -->
                 <xsl:element name="tei:title">
                     <xsl:attribute name="level" select="'a'"/>
-                    <xsl:value-of select="normalize-space(html:td[1])"/>
+                    <xsl:value-of select="normalize-space(td[1])"/>
                 </xsl:element>
                 <!-- link to article -->
                 <xsl:element name="tei:idno">
                     <xsl:attribute name="type" select="'url'"/>
                     <xsl:value-of
-                        select="concat('http://archive.sakhrit.co/', html:td[1]/html:a/@href)"/>
+                        select="concat('http://archive.sakhrit.co/', td[1]/a/@href)"/>
                 </xsl:element>
                 <xsl:element name="tei:idno">
                     <xsl:attribute name="type" select="'sakhritArticle'"/>
-                    <xsl:value-of select="replace(html:td[1]/html:a/@href, '.+=(\d+)$', '$1')"/>
+                    <xsl:value-of select="replace(td[1]/a/@href, '.+=(\d+)$', '$1')"/>
                 </xsl:element>
             </xsl:element>
             <!-- journal information -->
@@ -82,7 +83,7 @@
                 <!-- journal title -->
                 <xsl:element name="tei:title">
                     <xsl:attribute name="level" select="'j'"/>
-                    <xsl:value-of select="normalize-space(html:td[2])"/>
+                    <xsl:value-of select="normalize-space(td[2])"/>
                 </xsl:element>
                 <!-- editor is not provided -->
                 <!-- imprint information is generally lacking and must be added later -->
@@ -92,25 +93,25 @@
                     <xsl:element name="tei:date">
                         <!-- detailed date information is available on the article page linked by the URL above -->
                         <xsl:attribute name="when"
-                            select="replace(normalize-space(html:td[3]), '.*(\d{4})', '$1')"/>
+                            select="replace(normalize-space(td[3]), '.*(\d{4})', '$1')"/>
                     </xsl:element>
                 </xsl:element>
                 <!-- date / issue information -->
                 <xsl:element name="tei:biblScope">
                     <!-- detailed issue information is available on the article page linked by the URL above -->
                     <xsl:attribute name="unit" select="'issue'"/>
-                    <xsl:value-of select="normalize-space(html:td[3])"/>
+                    <xsl:value-of select="normalize-space(td[3])"/>
                 </xsl:element>
             </xsl:element>
         </xsl:element>
     </xsl:template>
     <!-- add a way to account for additional pages not currently scraped -->
-    <xsl:template match="html:tr[@class = 'PagerStyle']" mode="m_table-to-bibl">
+    <xsl:template match="tr[@class = 'PagerStyle']" mode="m_table-to-bibl">
         <xsl:element name="tei:note">
             <xsl:text>Total number of pages: </xsl:text>
             <xsl:element name="tei:num">
-                <xsl:attribute name="value" select="count(descendant::html:table/html:tr/html:td)"/>
-                <xsl:value-of select="count(descendant::html:table/html:tr/html:td)"/>
+                <xsl:attribute name="value" select="count(descendant::table/tr/td)"/>
+                <xsl:value-of select="count(descendant::table/tr/td)"/>
             </xsl:element>
         </xsl:element>
     </xsl:template>
