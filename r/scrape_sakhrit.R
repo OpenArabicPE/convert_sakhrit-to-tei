@@ -3,6 +3,7 @@ library(tidyverse) # load the tidyverse, which includes dplyr, tidyr and ggplot2
 library(lubridate) # for working with dates
 library(anytime) # for parsing incomplete dates
 library(rvest) # for parsing HTML/XML tables and web scraping
+library(xml2) # for manipulating HTML/XML
 #library(httr)
 library(RCurl)
 # enable unicode
@@ -22,13 +23,14 @@ func.Retrieve.ArticlePages.Csv <- function(ArticlePages) {
     v.Source <- read_html(v.Url, encoding = "utf-8") #make sure to specify utf-8 encoding
     # PROBLEM: some pages default to "DefaultArchive.aspx"
     # check if the table with bibliographic information is present
-    if (xml_find_all(v.Source, "descendant::td[@class='F_MagazineName']")) {
+    #if (xml_find_first(v.Source, "descendant::td[@class='F_MagazineName']")) {
     # issue level
     v.Issue <- xml_find_first(v.Source, "descendant::td[@class='F_MagazineName']/table/tr/td[1]")
-    journal.title <- xml_text(xml_find_all(v.Issue, "child::a[1]"))
-    journal.issue <- xml_text(xml_find_all(v.Issue, "child::a[2]"))
-    journal.issue.url <- xml_attr(xml_find_all(v.Issue, "child::a[2]"), attr = "href")
-    date.publication <- xml_text(xml_find_all(v.Issue, "child::span[1]"))
+    # check if these fields are empty!
+    journal.title <- xml_text(xml_find_first(v.Issue, "child::a[1]"))
+    journal.issue <- xml_text(xml_find_first(v.Issue, "child::a[2]"))
+    journal.issue.url <- xml_attr(xml_find_first(v.Issue, "child::a[2]"), attr = "href")
+    date.publication <- xml_text(xml_find_first(v.Issue, "child::span[1]"))
     place.publication <- xml_text(xml_find_first(v.Source, "descendant::a[@class='countrylable']"))
     # article level
     v.Author <- xml_find_all(v.Source, "descendant::a[child::span[@id='ContentPlaceHolder1_Label2']]")
@@ -49,9 +51,9 @@ func.Retrieve.ArticlePages.Csv <- function(ArticlePages) {
     )
     # save output
     write.table(v.Df, file = paste("../_output/csv/",ArticlePages,".csv", sep = "") , row.names = F, quote = T, sep = ",")
-    } else {
-      print(paste(ArticlePages, "does not contain the bibliographic information.", sep = " "))
-    }
+    #} else {
+    #  print(paste(ArticlePages, "does not contain the bibliographic information.", sep = " "))
+    #}
   } else {
     print(paste(ArticlePages, "could not be found.", sep = " "))
   }
@@ -74,5 +76,11 @@ v.Urls <- unlist(v.Urls)
 # set working directory
 
 # apply a function to all files
-sapply(v.Urls, FUN = func.Retrieve.Article.Details.Csv)
+sapply(v.Urls, FUN = func.Retrieve.ArticlePages.Csv)
 
+# debugging
+
+v.Url <-paste(v.Url.Base, "ArticlePages.aspx?ArticleID=241", sep = "")
+v.Source <- read_html(v.Url, encoding = "utf-8")
+v.Issue <- xml_find_first(v.Source, "descendant::td[@class='F_MagazineName']")
+journal.title <- xml_text(xml_find_first(v.Issue, "child::a[1]"))
