@@ -1,3 +1,6 @@
 .DS_Store
 _output/
-data/
+#data/
+data/authors/
+data/authorsArticles/
+#data/test/
