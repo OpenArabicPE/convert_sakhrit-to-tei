@@ -40,13 +40,13 @@ f.Retrieve.authorsArticles.Csv <- function(authorsArticles) {
     v.Source <- read_html(v.Url, encoding = "utf-8") #make sure to specify utf-8 encoding
     v.Table <- v.Source %>% #make sure to specify utf-8 encoding
     html_nodes(xpath="descendant::table[@id = 'ContentPlaceHolder1_gvSearchResult']")
-    article.title <- xml_find_first(v.Table, "descendant::tr/td[1][child::a]/a" )
+    article.title <- xml_find_all(v.Table, "descendant::tr/td[1][child::a]/a" )
     article.url <- xml_attr(article.title, attr = "href")
     article.title <- xml_text(article.title, trim = T)
     author.name <- v.Source %>%
-    html_node(xpath="normalize-space(descendant::node()[@id = 'ContentPlaceHolder1_lbAuthorName'])")
-    journal.title <- xml_text(xml_find_first(v.Table, "descendant::tr/td[2]"), trim = T)
-    journal.issue <- xml_text(xml_find_first(v.Table, "descendant::tr/td[3]"), trim = T)
+      html_node(xpath="normalize-space(descendant::node()[@id = 'ContentPlaceHolder1_lbAuthorName'])")
+    journal.title <- xml_text(xml_find_all(v.Table, "descendant::tr/td[2]"), trim = T)
+    journal.issue <- xml_text(xml_find_all(v.Table, "descendant::tr/td[3]"), trim = T)
     v.Df <- data.frame(article.title[1:35], 
         article.url[1:35], 
         journal.title[1:35], 
@@ -62,19 +62,19 @@ f.Retrieve.authorsArticles.Csv <- function(authorsArticles) {
 f.Retrieve.ArticlePages.Csv <- function(ArticlePages) {
     v.Source <- read_html(ArticlePages, encoding = "utf-8") #make sure to specify utf-8 encoding
     # issue level
-    v.Issue <- xml_find_first(v.Source, "descendant::td[@class='F_MagazineName']/table/tr/td[1]")
-    journal.title <- xml_text(xml_find_first(v.Issue, "child::a[1]"))
-    journal.issue <- xml_text(xml_find_first(v.Issue, "child::a[2]"))
-    journal.issue.url <- xml_attr(xml_find_first(v.Issue, "child::a[2]"), attr = "href")
-    date.publication <- xml_text(xml_find_first(v.Issue, "child::span[1]"))
-    place.publication <- xml_text(xml_find_first(v.Source, "descendant::a[@class='countrylable']"))
+    v.Issue <- xml_find_all(v.Source, "descendant::td[@class='F_MagazineName']/table/tr/td[1]")
+    journal.title <- xml_text(xml_find_all(v.Issue, "child::a[1]"))
+    journal.issue <- xml_text(xml_find_all(v.Issue, "child::a[2]"))
+    journal.issue.url <- xml_attr(xml_find_all(v.Issue, "child::a[2]"), attr = "href")
+    date.publication <- xml_text(xml_find_all(v.Issue, "child::span[1]"))
+    place.publication <- xml_text(xml_find_all(v.Source, "descendant::a[@class='countrylable']"))
     # article level
-    v.Author <- xml_find_first(v.Source, "descendant::a[child::span[@id='ContentPlaceHolder1_Label2']]")
-    author.name <- xml_text(xml_find_first(v.Author,"span[@id='ContentPlaceHolder1_Label2']"))
+    v.Author <- xml_find_all(v.Source, "descendant::a[child::span[@id='ContentPlaceHolder1_Label2']]")
+    author.name <- xml_text(xml_find_all(v.Author,"span[@id='ContentPlaceHolder1_Label2']"))
     author.url <- xml_attr(v.Author, attr = "href")
     article.url <- ArticlePages
     # links to images
-    v.Pages <- xml_find_first(v.Source, "descendant::div[@id='svPlayerId']/div/div/div/img[@class='slide_image']")
+    v.Pages <- xml_find_all(v.Source, "descendant::div[@id='svPlayerId']/div/div/div/img[@class='slide_image']")
     facsimile.url <- xml_attr(v.Pages, attr = "src")
     # still missing: article.title 
     # construct data frame
@@ -96,22 +96,46 @@ f.Retrieve.authorsArticles.Title <- function(authorsArticles) {
     v.Source <- read_html(v.Url, encoding = "utf-8") #make sure to specify utf-8 encoding
     v.Table <- v.Source %>% #make sure to specify utf-8 encoding
     html_nodes(xpath="descendant::table[@id = 'ContentPlaceHolder1_gvSearchResult']")
-    article.title <- xml_text(xml_find_first(v.Table, "descendant::tr/td[1][child::a]/a" ))
+    article.title <- xml_text(xml_find_all(v.Table, "descendant::tr/td[1][child::a]/a" ))
 }
 
 # function to retrieve information from the detail page of each issue: contents.aspx?CID=123
-contents <- "contents.aspx?CID=158"
-v.Source <- read_html(contents, encoding = "utf-8")
+f.Retrieve.contents.Csv <- function(contents) {
+  v.Source <- read_html(contents, encoding = "utf-8")
+  # issue level
+  v.Issue <- xml_find_all(v.Source, "descendant::table[@id='ContentPlaceHolder1_fvIssueInfo']/descendant::td[@class='F_MagazineName']/table/tr/td[1]")
+  journal.title <- xml_text(xml_find_first(v.Issue , "child::a[1]"), trim = T)
+  journal.url <- xml_attr(xml_find_first(v.Issue , "child::a[1]"), attr = "href")
+  journal.issue <- xml_text(xml_find_first(v.Issue , "child::span[1]"),trim = T)
+  date.publication <- xml_text(xml_find_first(v.Issue , "child::span[2]"),trim = T)
+  # article level
+  v.Issue.Content <- xml_find_all(v.Source, "descendant::table[@id='ContentPlaceHolder1_dlIndexs']")
+  v.Article <- xml_find_all(v.Issue.Content, "child::tr")
+  author.name <- xml_text(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][1]"), trim = T)
+  article.title <- xml_text(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][2]"), trim = T)
+  article.url <- xml_attr(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][1]"), attr = "href")
+  page.from <- xml_text(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][3]"), trim = T)
+  # construct data frame
+  v.Df <- data_frame(
+    journal.title, journal.issue, journal.url, date.publication, #place.publication,
+    author.name, # author.url,
+    article.title, article.url, page.from
+  )
+  # save output
+  write.table(v.Df, file = paste("../_output/csv/",contents,".csv", sep = "") , row.names = F, quote = T, sep = ",")
+}
 
 # apply functions to the full data set
 # navigate to folder containing a scraped copy of the website
-setwd("BachUni/programming/wget/dumpsite/sakhrit/archive.sakhrit.co")
+setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/data_sakhrit/sakhrit")
 
 # read all file names in a folder
 v.Filenames.Authors <- list.files(pattern="authorsArticles*", full.names=TRUE)
 v.Filenames.Articles <- list.files(pattern="ArticlePages*", full.names=TRUE)
+v.Filenames.Contents <- list.files(pattern="contents*", full.names=TRUE)
 
 # apply a function to all files
+sapply(v.Filenames.Contents, FUN = f.Retrieve.contents.Csv)
 sapply(v.Filenames.Authors, FUN = f.Retrieve.authorsArticles.Csv)
 sapply(v.Filenames.Authors, FUN = f.Retrieve.authorsArticles.Html)
 sapply(v.Filenames.Articles, FUN = f.Retrieve.ArticlePages.Csv)
