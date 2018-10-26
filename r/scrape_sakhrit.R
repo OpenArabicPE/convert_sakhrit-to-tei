@@ -85,3 +85,9 @@ v.Url <-paste(v.Url.Base, "ArticlePages.aspx?ArticleID=240", sep = "")
 v.Source <- read_html(v.Url, encoding = "utf-8")
 v.Issue <- xml_find_first(v.Source, "descendant::td[@class='F_MagazineName']")
 journal.title <- xml_text(xml_find_first(v.Issue, "child::a[1]"))
+
+
+# new idea: scrape data only for the journals published before 1920!
+# 1. follow the "newmagazineYears.aspx?MID=" + number and find all issues
+# 2. scrape all information from the issue pages
+# 3. follow the links to the ArticlePages and scrape the links to the facsimiles.
