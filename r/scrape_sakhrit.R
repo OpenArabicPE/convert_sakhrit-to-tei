@@ -1,3 +1,6 @@
+# this script tries to scrape archive.sakhrit.co directly from within R. Since the URLs are simple sequences of IDs
+# it is much easier to scrape everything needed with wget and process this downloaded data in R.
+
 # Remember it is good coding technique to add additional packages to the top of your script 
 library(tidyverse) # load the tidyverse, which includes dplyr, tidyr and ggplot2
 library(lubridate) # for working with dates
@@ -8,6 +11,11 @@ library(xml2) # for manipulating HTML/XML
 library(RCurl)
 # enable unicode
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
+
+# set a working directory
+setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/convert_sakhrit-to-tei")
+# load functions from external R script
+source("r/functions_sakhrit.R")
 
 # set a working directory for test files
 setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/convert_sakhrit-to-tei/data/test")
@@ -60,8 +68,8 @@ func.Retrieve.ArticlePages.Csv <- function(ArticlePages) {
 }
 
 # generate a sequence of numbers to be used as article IDs, author IDs, etc.
-v.Id.Sequence <- c(241:250)
-v.Url.Selector <- "ArticlePages.aspx?ArticleID=" # "ArticlePages.aspx?ArticleID=" / "authorsArticles.aspx?AID="
+v.Id.Sequence <- c(158:160)
+v.Url.Selector <- paste(v.Url.Base, "contents.aspx?CID=", sep = "") # "ArticlePages.aspx?ArticleID=" / "authorsArticles.aspx?AID=" / "contents.aspx?CID="
 
 # generate a list of URLs
 v.Urls <- list()
@@ -76,7 +84,16 @@ v.Urls <- unlist(v.Urls)
 # set working directory
 
 # apply a function to all files
-lapply(v.Urls, FUN = func.Retrieve.ArticlePages.Csv)
+
+f.scrape.contents <- function(v.Url) {
+if (RCurl::url.exists(v.Url)) {
+  lapply(v.Url, FUN = f.Retrieve.contents.Csv)
+  } else {
+  print(paste(v.Url, "could not be found.", sep = " "))
+  }
+}
+
+lapply(v.Urls, FUN = f.scrape.contents)
 
 # debugging
 library(purrr)
