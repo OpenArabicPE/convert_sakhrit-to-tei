@@ -7,123 +7,13 @@ library(rvest) # for parsing HTML/XML tables
 # enable unicode
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
 
+# set a working directory
+setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/convert_sakhrit-to-tei")
+# load functions from external R script
+source("r/functions_sakhrit.R")
+
 # set a working directory for test files
-setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/convert_sakhrit-to-tei/data/test") #/Volumes/Dessau HD/
-
-# function to retrieve the relevant HTML table
-f.Retrieve.authorsArticles.Html <- function(authorsArticles) {
-    v.Source <- read_html(authorsArticles, encoding = "utf-8") #make sure to specify utf-8 encoding
-    v.Table <- v.Source %>% #make sure to specify utf-8 encoding
-    html_nodes(xpath="descendant::table[@id = 'ContentPlaceHolder1_gvSearchResult']")
-    #v.Author.Name <- v.Source %>%
-    #html_node(xpath="normalize-space(descendant::node()[@id = 'ContentPlaceHolder1_lbAuthorName'])")
-    #v.Df <- v.Table %>% # convert a html table to an R data frame
-    #html_table(fill = T) %>%
-    #data.frame() %>%
-    # select columns of interest
-    #dplyr::select(1,2,3) %>%
-    # rename columns
-    #dplyr::rename(
-     # article.title = 1,
-      #journal.title = 2,
-      #journal.issue = 3) %>%
-    # add author name
-    #dplyr::mutate(author.name = as.character(v.Author.Name))
-    # save data
-    #save(v.Df, file = paste("../_output/rda/",v.Url,".rda", sep = ""))
-    #write.table(v.Df, file = paste("../_output/csv/",v.Url,".csv", sep = "") , row.names = F, quote = T, sep = ",")
-    write_xml(v.Table, file = paste("../_output/html/",authorsArticles,".html", sep = ""), options = "as_html")
-}
-
-f.Retrieve.authorsArticles.Csv <- function(authorsArticles) {
-    v.Url <- authorsArticles
-    v.Source <- read_html(v.Url, encoding = "utf-8") #make sure to specify utf-8 encoding
-    v.Table <- v.Source %>% #make sure to specify utf-8 encoding
-    html_nodes(xpath="descendant::table[@id = 'ContentPlaceHolder1_gvSearchResult']")
-    article.title <- xml_find_all(v.Table, "descendant::tr/td[1][child::a]/a" )
-    article.url <- xml_attr(article.title, attr = "href")
-    article.title <- xml_text(article.title, trim = T)
-    author.name <- v.Source %>%
-      html_node(xpath="normalize-space(descendant::node()[@id = 'ContentPlaceHolder1_lbAuthorName'])")
-    journal.title <- xml_text(xml_find_all(v.Table, "descendant::tr/td[2]"), trim = T)
-    journal.issue <- xml_text(xml_find_all(v.Table, "descendant::tr/td[3]"), trim = T)
-    v.Df <- data.frame(article.title[1:35], 
-        article.url[1:35], 
-        journal.title[1:35], 
-        journal.issue[1:35],
-        stringsAsFactors = T,
-        check.names = F)%>%
-    dplyr::mutate(author.name = author.name,
-        source.url = v.Url)
-    write.table(v.Df, file = paste("../_output/csv/",v.Url,".csv", sep = "") , row.names = F, quote = T, sep = ",")
-}
-
-# retrieve everything from the article details page
-f.Retrieve.ArticlePages.Csv <- function(ArticlePages) {
-    v.Source <- read_html(ArticlePages, encoding = "utf-8") #make sure to specify utf-8 encoding
-    # issue level
-    v.Issue <- xml_find_all(v.Source, "descendant::td[@class='F_MagazineName']/table/tr/td[1]")
-    journal.title <- xml_text(xml_find_all(v.Issue, "child::a[1]"))
-    journal.issue <- xml_text(xml_find_all(v.Issue, "child::a[2]"))
-    journal.issue.url <- xml_attr(xml_find_all(v.Issue, "child::a[2]"), attr = "href")
-    date.publication <- xml_text(xml_find_all(v.Issue, "child::span[1]"))
-    place.publication <- xml_text(xml_find_all(v.Source, "descendant::a[@class='countrylable']"))
-    # article level
-    v.Author <- xml_find_all(v.Source, "descendant::a[child::span[@id='ContentPlaceHolder1_Label2']]")
-    author.name <- xml_text(xml_find_all(v.Author,"span[@id='ContentPlaceHolder1_Label2']"))
-    author.url <- xml_attr(v.Author, attr = "href")
-    article.url <- ArticlePages
-    # links to images
-    v.Pages <- xml_find_all(v.Source, "descendant::div[@id='svPlayerId']/div/div/div/img[@class='slide_image']")
-    facsimile.url <- xml_attr(v.Pages, attr = "src")
-    # still missing: article.title 
-    # construct data frame
-    v.Df <- data_frame(
-      journal.title, journal.issue, journal.issue.url, date.publication, place.publication,
-      author.name, author.url,
-      article.url, 
-      # the data frame will have one row for each page in the article
-      facsimile.url
-      )
-    # save output
-    write.table(v.Df, file = paste("../_output/csv/",ArticlePages,".csv", sep = "") , row.names = F, quote = T, sep = ",")
-}
-
-# this function retrieves all article titles from the first page of the target URL
-# NOT to be used at the moment
-f.Retrieve.authorsArticles.Title <- function(authorsArticles) {
-    v.Url <- paste("http://archive.sakhrit.co/", authorsArticles, sep = "")
-    v.Source <- read_html(v.Url, encoding = "utf-8") #make sure to specify utf-8 encoding
-    v.Table <- v.Source %>% #make sure to specify utf-8 encoding
-    html_nodes(xpath="descendant::table[@id = 'ContentPlaceHolder1_gvSearchResult']")
-    article.title <- xml_text(xml_find_all(v.Table, "descendant::tr/td[1][child::a]/a" ))
-}
-
-# function to retrieve information from the detail page of each issue: contents.aspx?CID=123
-f.Retrieve.contents.Csv <- function(contents) {
-  v.Source <- read_html(contents, encoding = "utf-8")
-  # issue level
-  v.Issue <- xml_find_all(v.Source, "descendant::table[@id='ContentPlaceHolder1_fvIssueInfo']/descendant::td[@class='F_MagazineName']/table/tr/td[1]")
-  journal.title <- xml_text(xml_find_first(v.Issue , "child::a[1]"), trim = T)
-  journal.url <- xml_attr(xml_find_first(v.Issue , "child::a[1]"), attr = "href")
-  journal.issue <- xml_text(xml_find_first(v.Issue , "child::span[1]"),trim = T)
-  date.publication <- xml_text(xml_find_first(v.Issue , "child::span[2]"),trim = T)
-  # article level
-  v.Issue.Content <- xml_find_all(v.Source, "descendant::table[@id='ContentPlaceHolder1_dlIndexs']")
-  v.Article <- xml_find_all(v.Issue.Content, "child::tr")
-  author.name <- xml_text(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][1]"), trim = T)
-  article.title <- xml_text(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][2]"), trim = T)
-  article.url <- xml_attr(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][1]"), attr = "href")
-  page.from <- xml_text(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][3]"), trim = T)
-  # construct data frame
-  v.Df <- data_frame(
-    journal.title, journal.issue, journal.url, date.publication, #place.publication,
-    author.name, # author.url,
-    article.title, article.url, page.from
-  )
-  # save output
-  write.table(v.Df, file = paste("../_output/csv/",contents,".csv", sep = "") , row.names = F, quote = T, sep = ",")
-}
+setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/convert_sakhrit-to-tei/data/test")
 
 # apply functions to the full data set
 # navigate to folder containing a scraped copy of the website
@@ -139,6 +29,87 @@ sapply(v.Filenames.Contents, FUN = f.Retrieve.contents.Csv)
 sapply(v.Filenames.Authors, FUN = f.Retrieve.authorsArticles.Csv)
 sapply(v.Filenames.Authors, FUN = f.Retrieve.authorsArticles.Html)
 sapply(v.Filenames.Articles, FUN = f.Retrieve.ArticlePages.Csv)
+
+# combine the individual result files into single data frames
+setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/data_sakhrit/csv")
+v.Filenames.Authors <- list.files(pattern="authorsArticles*", full.names=TRUE)
+v.Filenames.Articles <- list.files(pattern="ArticlePages*", full.names=TRUE)
+v.Filenames.Contents <- list.files(pattern="contents*", full.names=TRUE)
+
+# Purrr:: read all files and combine them into one dataframe
+data.Sakhrit.authorsArticles <- purrr::map_df(v.Filenames.Authors, read.csv)
+data.Sakhrit.Articles <- purrr::map_df(v.Filenames.Articles, read.csv)
+data.Sakhrit.Contents <- purrr::map_df(v.Filenames.Contents, read.csv)
+
+# do some data cleaning:
+data.Sakhrit.authorsArticles <- data.Sakhrit.authorsArticles %>%
+  # 1. rename columns
+  dplyr::rename(
+    article.title = article.title.1.35.,
+    article.url = article.url.1.35.,
+    journal.title = journal.title.1.35.,
+    journal.issue = journal.issue.1.35.,
+    author.url = source.url
+  ) %>%
+  # 2. remove all rows that contain NA values or numbers for article title
+  tidyr::drop_na(article.url)
+
+# write results to file
+write.table(data.Sakhrit.authorsArticles, file = "../_output/csv/authorsArticles_all.csv", row.names = F, quote = T, sep = ",")
+save(data.Sakhrit.authorsArticles, file = "../output/rda/authorsArticles_all.rda")
+write.table(data.Sakhrit.Contents, file = "../_output/csv/contents_all.csv", row.names = F, quote = T, sep = ",")
+save(data.Sakhrit.Contents, file = "../output/rda/contents_all.rda")
+
+
+# convert to and save as XML
+v.Data <- data.Sakhrit.authorsArticles
+v.Xml <- xmlTree()
+v.Xml$addTag("TEI", close = F)
+v.Xml$addTag("teiHeader", close = T)
+v.Xml$addTag("text", close = F)
+v.Xml$addTag("body", close = F)
+v.Xml$addTag("div", close = F)
+v.Xml$addTag("listBibl", close = F)
+
+for (i in 1:nrow(v.Data)) {
+  # Url to the authorsArticles page as source
+  v.Source <- as.character(v.Data[i, "author.url"])
+  v.Xml$addTag("biblStruct", attrs = c(source = v.Source), close = F)
+  #for (j in names(v.Data)) {
+  #  v.Xml$addTag(j, v.Data[i, j])
+  #}
+  # article information
+  v.Xml$addTag("analytic", close = F )
+  # author
+  #v.Xml$addTag("author", attrs = c(ref = paste("aid", sub(".+AID=(\d+)", "$1", v.Source, perl = T), sep = ":")), close = F)
+  v.Xml$addTag("author", attrs = c(ref = v.Source), close = F)
+  v.Xml$addTag("persName", v.Data[i, "author.name"])
+  v.Xml$closeTag() # author
+  # title
+  v.Xml$addTag("title", v.Data[i, "article.title"], attrs = c(level="a"))
+  # link to article
+  v.Xml$addTag("idno", v.Data[i, "article.url"], attrs = c(type="url"))
+  v.Xml$closeTag() # analytic
+  # journal information
+  v.Xml$addTag("monogr", close = F )
+  # title
+  v.Xml$addTag("title", v.Data[i, "journal.title"], attrs = c(level="j"))
+  # editor and imprint are missing at this point
+  # issue etc.
+  v.Xml$addTag("biblScope", v.Data[i, "journal.issue"], attrs = c(unit="issue"))
+  v.Xml$closeTag() # monogr
+  v.Xml$closeTag() # biblStruct
+}
+v.Xml$closeTag() # listBibl
+v.Xml$closeTag() # div
+v.Xml$closeTag() # body
+v.Xml$closeTag() # text
+v.Xml$closeTag() # TEI
+
+# view the result
+#cat(saveXML(v.Xml))
+# save the result
+saveXML(v.Xml, file = "authorsArticles_all.TEIP5.xml", indent = T, encoding = "utf-8")
 
 
 
