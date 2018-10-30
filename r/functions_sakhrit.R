@@ -11,7 +11,7 @@ Sys.setlocale("LC_ALL", "en_US.UTF-8")
 
 
 # function to retrieve the relevant HTML table
-f.Retrieve.authorsArticles.Html <- function(authorsArticles) {
+f.retrieve.authorsArticles.html <- function(authorsArticles) {
   v.Source <- read_html(authorsArticles, encoding = "utf-8") #make sure to specify utf-8 encoding
   v.Table <- v.Source %>% #make sure to specify utf-8 encoding
     html_nodes(xpath="descendant::table[@id = 'ContentPlaceHolder1_gvSearchResult']")
@@ -35,7 +35,7 @@ f.Retrieve.authorsArticles.Html <- function(authorsArticles) {
   write_xml(v.Table, file = paste("../_output/html/",authorsArticles,".html", sep = ""), options = "as_html")
 }
 
-f.Retrieve.authorsArticles.Csv <- function(authorsArticles) {
+f.retrieve.authorsArticles.csv <- function(authorsArticles) {
   v.Url <- authorsArticles
   v.Source <- read_html(v.Url, encoding = "utf-8") #make sure to specify utf-8 encoding
   v.Table <- v.Source %>% #make sure to specify utf-8 encoding
@@ -59,7 +59,7 @@ f.Retrieve.authorsArticles.Csv <- function(authorsArticles) {
 }
 
 # retrieve everything from the article details page
-f.Retrieve.ArticlePages.Csv <- function(ArticlePages) {
+f.retrieve.ArticlePages.csv <- function(ArticlePages) {
   v.Source <- read_html(ArticlePages, encoding = "utf-8") #make sure to specify utf-8 encoding
   # issue level
   v.Issue <- xml_find_all(v.Source, "descendant::td[@class='F_MagazineName']/table/tr/td[1]")
@@ -91,7 +91,7 @@ f.Retrieve.ArticlePages.Csv <- function(ArticlePages) {
 
 # this function retrieves all article titles from the first page of the target URL
 # NOT to be used at the moment
-f.Retrieve.authorsArticles.Title <- function(authorsArticles) {
+f.retrieve.authorsArticles.title <- function(authorsArticles) {
   v.Url <- paste("http://archive.sakhrit.co/", authorsArticles, sep = "")
   v.Source <- read_html(v.Url, encoding = "utf-8") #make sure to specify utf-8 encoding
   v.Table <- v.Source %>% #make sure to specify utf-8 encoding
@@ -100,27 +100,50 @@ f.Retrieve.authorsArticles.Title <- function(authorsArticles) {
 }
 
 # function to retrieve information from the detail page of each issue: contents.aspx?CID=123
-f.Retrieve.contents.Csv <- function(contents) {
+f.retrieve.contents.csv <- function(contents) {
+  # some feedback message would be good for debugging purposes
   v.Source <- read_html(contents, encoding = "utf-8")
-  # issue level
+  # issue level: in some scraped files "table[@id='ContentPlaceHolder1_fvIssueInfo']" is missing
   v.Issue <- xml_find_all(v.Source, "descendant::table[@id='ContentPlaceHolder1_fvIssueInfo']/descendant::td[@class='F_MagazineName']/table/tr/td[1]")
   journal.title <- xml_text(xml_find_first(v.Issue , "child::a[1]"), trim = T)
   journal.url <- xml_attr(xml_find_first(v.Issue , "child::a[1]"), attr = "href")
-  journal.issue <- xml_text(xml_find_first(v.Issue , "child::span[1]"),trim = T)
+  journal.id <- sub(".+MID=(\\d+)", "\\1", journal.url)
+  issue <- xml_text(xml_find_first(v.Issue , "child::span[1]"),trim = T)
   date.publication <- xml_text(xml_find_first(v.Issue , "child::span[2]"),trim = T)
+  date.publication.iso <- f.date.convert.sakhrit.to.iso(date.publication) # this function just returns NA if it cannot find data to be parsed
   # article level
   v.Issue.Content <- xml_find_all(v.Source, "descendant::table[@id='ContentPlaceHolder1_dlIndexs']")
   v.Article <- xml_find_all(v.Issue.Content, "child::tr")
   author.name <- xml_text(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][1]"), trim = T)
   article.title <- xml_text(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][2]"), trim = T)
   article.url <- xml_attr(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][1]"), attr = "href")
+  article.id <- sub(".+AID=(\\d+)", "\\1", article.url) # this can't be the author ID, since every reference to the same name gets a different AID here
+  issue.id <- sub(".+ISSUEID=(\\d+).*", "\\1", article.url)
   page.from <- xml_text(xml_find_all(v.Article, "descendant::a[@class='aIndexLinks'][3]"), trim = T)
   # construct data frame
   v.Df <- data_frame(
-    journal.title, journal.issue, journal.url, date.publication, #place.publication,
-    author.name, # author.url,
-    article.title, article.url, page.from
+    journal.title, journal.id, #journal.url,
+    issue, issue.id,
+    date.publication, date.publication.iso, #place.publication,
+    author.name, #author.id,
+    article.title, article.url, article.id, page.from
   )
   # save output
   write.table(v.Df, file = paste("../_output/csv/",contents,".csv", sep = "") , row.names = F, quote = T, sep = ",")
 }
+
+v.month.names <- dplyr::tibble(month.number = 1:12, month.name = list("يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"))
+
+# function to convert the publication date from Sakhrit into a proper ISO date
+f.date.convert.sakhrit.to.iso <- function(date) {
+  # this function just returns NA if it cannot find data to be parsed
+  date.year <- as.integer(gsub("(\\d+)\\s+(.+)\\s+(\\d{4})", "\\3", date))
+  date.day <- as.integer(gsub("(\\d+)\\s+(.+)\\s+(\\d{4})", "\\1", date))
+  date.month.name <- gsub("(\\d+)\\s+(.+)\\s+(\\d{4})", "\\2", date)
+  date.month.number <- as.integer(filter(v.month.names, month.name == date.month.name)[1])
+  lubridate::as_date(sprintf("%d-%02d-%02d", date.year, date.month.number, date.day))
+}
+
+f.date.publication.period <- function(dataframe, date.start, date.stop){
+  dataframe[dataframe$date.publication.iso >= anydate(date.start) & dataframe$date.publication.iso <= anydate(date.stop),]
+  }
