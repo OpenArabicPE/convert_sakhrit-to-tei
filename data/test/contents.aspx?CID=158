@@ -359,7 +359,7 @@ if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side frame
                                     <td style="width:180px;text-align:center">
                                         <a style="text-decoration:none; font-style:normal;color: #fff;" href="newmagazineYears.aspx?MID=3">الجسور</a>
                                         <br /><span id="ContentPlaceHolder1_fvIssueInfo_lbissuenumber"><font color="White">العدد رقم  3</font></span>
-                                        <br /><span id="ContentPlaceHolder1_fvIssueInfo_Label1"><font color="White">1 ديسمبر 1981</font></span>
+                                        <br /><span id="ContentPlaceHolder1_fvIssueInfo_Label1"><font color="White"></font></span>
                                         <br />      
                                     </td>
                                     <td style="width:1px;background-color:White;height:100px"></td>
