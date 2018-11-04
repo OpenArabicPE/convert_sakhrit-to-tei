@@ -56,11 +56,13 @@ data.sakhrit.authorsArticles <- data.sakhrit.authorsArticles %>%
   # 2. remove all rows that contain NA values or numbers for article title
   tidyr::drop_na(article.url)
 
+# load data
+data.sakhrit.contents <- read_csv("contents_all.csv")
 # fix data types: dates
 data.sakhrit.contents$date.publication.iso <- anydate(data.sakhrit.contents$date.publication.iso)
 
 # write results to file
-setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/data_sakhrit/_output")
+setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/data_sakhrit/")
 write.table(data.sakhrit.authorsArticles, file = "csv/authorsArticles_all.csv", row.names = F, quote = T, sep = ",")
 save(data.sakhrit.authorsArticles, file = "rda/authorsArticles_all.rda")
 
@@ -94,7 +96,7 @@ f.date.slice.decade <- function(df.input, date.start, date.stop) {
   }
 }
 
-f.date.slice.decade(data.sakhrit.contents, 1921, 2008)
+f.date.slice.decade(data.sakhrit.contents, 1876, 2008)
 
 
 # convert to and save as XML
