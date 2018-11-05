@@ -7,7 +7,7 @@ library(rvest) # for parsing HTML/XML tables
 # enable unicode
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
 
-# set a working directory
+# set a working directory to load functions
 setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/convert_sakhrit-to-tei")
 # load functions from external R script
 source("r/functions_sakhrit.R")
@@ -74,29 +74,8 @@ data.sakhrit.contents.1870to1920 <- f.date.publication.period(data.sakhrit.conte
 write.table(data.sakhrit.contents.1870to1920, file = "csv/contents_1870-1920.csv", row.names = F, quote = T, sep = ",")
 save(data.sakhrit.contents.1870to1920, file = "rda/contents_1870-1920.rda")
 
-# slice data into rolling decades
-## load data
-setwd("/BachUni/BachBibliothek/GitHub/OpenArabicPE/data_sakhrit/")
-load("rda/contents_all.rda")
-## 1. define start year
-## 2. define a stop year
-## 3. select data that falls between the two
-## 4. increment start year by one and repeat until start year equals stop year
-
-f.date.slice.decade <- function(df.input, date.start, date.stop) {
-  date.decade <- date.start + 9
-  #df.input <- data.sakhrit.contents
-  if(date.start <= date.stop) {
-    # limit df.input to current decade
-    v.Df <- df.input[lubridate::year(df.input$date.publication.iso) >= date.start & lubridate::year(df.input$date.publication.iso) <= date.decade,]
-    # save output
-    write.table(v.Df, file = paste("csv/contents_",date.start ,"-", date.decade, ".csv", sep = ""), row.names = F, quote = T, sep = ",")
-    save(v.Df, file = paste("rda/contents_",date.start ,"-", date.decade, ".rda", sep = ""))
-    f.date.slice.decade(df.input, date.start + 1, date.stop)
-  }
-}
-
-f.date.slice.decade(data.sakhrit.contents, 1876, 2008)
+# slice data set into decades
+f.date.slice.period(data.sakhrit.contents, 1876, 2008, 9)
 
 
 # convert to and save as XML

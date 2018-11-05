@@ -147,3 +147,24 @@ f.date.convert.sakhrit.to.iso <- function(date) {
 f.date.publication.period <- function(dataframe, date.start, date.stop){
   dataframe[dataframe$date.publication.iso >= anydate(date.start) & dataframe$date.publication.iso <= anydate(date.stop),]
   }
+
+# slice data into rolling periods
+## load data
+## 1. define start year
+## 2. define a stop year
+## 3. define a period
+## 4. select data that falls into the period starting with the start year
+## 5. increment start year by one and repeat until start year equals stop year
+
+f.date.slice.period <- function(df.input, date.start, date.stop, period) {
+  date.stop.period <- date.start + period
+  #df.input <- data.sakhrit.contents
+  if(date.start <= date.stop) {
+    # limit df.input to current decade
+    v.Df <- df.input[lubridate::year(df.input$date.publication.iso) >= date.start & lubridate::year(df.input$date.publication.iso) <= date.stop.period,]
+    # save output
+    write.table(v.Df, file = paste("csv/contents_",date.start ,"-", date.stop.period, ".csv", sep = ""), row.names = F, quote = T, sep = ",")
+    save(v.Df, file = paste("rda/contents_",date.start ,"-", date.stop.period, ".rda", sep = ""))
+    f.date.slice.period(df.input, date.start + 1, date.stop, period)
+  }
+}
