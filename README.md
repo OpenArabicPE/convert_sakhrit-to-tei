@@ -1,7 +1,7 @@
 ---
 title: "read me: convert_sakhrit-to-tei"
 author: Till Grallert
-date: 2017-03-17 14:29:58 +0100
+date: 2018-11-05
 ---
 
 The XSLT stylesheets in this repository provide a means to transform bibliographic information from [archive.sakhrit.co](http://archive.sakhrit.co) into TEI XML.
