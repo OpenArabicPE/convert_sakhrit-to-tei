@@ -156,15 +156,15 @@ f.date.publication.period <- function(dataframe, date.start, date.stop){
 ## 4. select data that falls into the period starting with the start year
 ## 5. increment start year by one and repeat until start year equals stop year
 
-f.date.slice.period <- function(df.input, date.start, date.stop, period) {
-  date.stop.period <- date.start + period
+f.date.slice.period <- function(df.input, onset, terminus, period) {
+  terminus.period <- onset + period
   #df.input <- data.sakhrit.contents
-  if(date.start <= date.stop) {
+  if(onset <= terminus) {
     # limit df.input to current decade
-    v.Df <- df.input[lubridate::year(df.input$date.publication.iso) >= date.start & lubridate::year(df.input$date.publication.iso) <= date.stop.period,]
+    v.Df <- df.input[lubridate::year(df.input$date.publication.iso) >= onset & lubridate::year(df.input$date.publication.iso) <= terminus.period,]
     # save output
-    write.table(v.Df, file = paste("csv/contents_",date.start ,"-", date.stop.period, ".csv", sep = ""), row.names = F, quote = T, sep = ",")
-    save(v.Df, file = paste("rda/contents_",date.start ,"-", date.stop.period, ".rda", sep = ""))
-    f.date.slice.period(df.input, date.start + 1, date.stop, period)
+    write.table(v.Df, file = paste("csv/contents_",onset ,"-", terminus.period, ".csv", sep = ""), row.names = F, quote = T, sep = ",")
+    save(v.Df, file = paste("rda/contents_",onset ,"-", terminus.period, ".rda", sep = ""))
+    f.date.slice.period(df.input, onset =  + 1, terminus, period)
   }
 }
