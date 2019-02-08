@@ -147,7 +147,7 @@
     
     <!-- variables based on the selected periodical -->
     <xsl:variable name="v_biblstruct" select="$p_periodicals/descendant::tei:biblStruct[@n=$p_id-sakhrit]"/>
-    <xsl:variable name="v_id-oclc" select="$v_biblstruct/descendant::tei:idno[@type='oclc'][1]"/>
+    <xsl:variable name="v_id-oclc" select="$v_biblstruct/descendant::tei:idno[@type='OCLC'][1]"/>
     <xsl:variable name="v_title-journal" select="$v_biblstruct/descendant::tei:title[not(@type='sub')]"/>
     
     
