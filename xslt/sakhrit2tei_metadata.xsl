@@ -16,16 +16,19 @@
             - Mawāqif: 15719 - 15818
             - Hilāl: 12720 - 13130 (for the end of 1920) or  14071 (for the end of 2006)
             - al-Muqtabas: 5649 - 5753 (this includes some issues from other journals)
+            - al-Muqṭataf: 8963 - 9672
     -->
     <xsl:param name="p_cid-start" select="5649"/>
     <xsl:param name="p_cid-stop" select="5753"/>
     <!-- the journal name is a random string only used for the resulting file names -->
     <xsl:param name="p_title-journal" select="'muqtabas'"/>
+    <xsl:param name="p_mid" select="107"></xsl:param>
     <!-- this is the base path to a local folder -->
     <xsl:param name="p_path-local" select="'digital-muqtabas/'"/>
     
     <!-- this is a stable address and should not be changed -->
-    <xsl:variable name="v_url-cid" select="'http://archive.sakhrit.co/contents.aspx?CID='"/>
+    <!-- https://archive.alsharekh.org/contents/107/8963 -->
+    <xsl:variable name="v_url-cid" select="concat('https://archive.alsharekh.org/contents/', $p_mid,'/')"/>
     
     <xsl:template match="/">
         <xsl:variable name="v_increment">
